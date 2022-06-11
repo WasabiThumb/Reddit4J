@@ -16,7 +16,7 @@ public class R4JTest {
         System.out.println("Initializing app");
         RedditApplication app = Reddit4J.getApplication();
         System.out.println("Creating client");
-        app.createClient(false, EnumSet.of(Scope.IDENTITY, Scope.READ)).whenComplete((RedditClient rc, Throwable t) -> {
+        app.createClient(true, EnumSet.of(Scope.IDENTITY, Scope.READ)).whenComplete((RedditClient rc, Throwable t) -> {
             if (t != null) {
                 System.out.println("Failed");
                 t.printStackTrace();
@@ -59,6 +59,9 @@ public class R4JTest {
                 }
                 System.out.println("===========================");
             }
+            System.out.println("Refreshing bearer token");
+            rc.refresh();
+            System.out.println("Success! New bearer token is " + rc.getBearerToken());
         } catch (Exception e) {
             e.printStackTrace();
         }

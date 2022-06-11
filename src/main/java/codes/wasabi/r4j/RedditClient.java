@@ -16,27 +16,30 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class RedditClient {
 
     private final RedditApplication app;
-    private final String bearerToken;
+    private String bearerToken;
     private final String refreshToken;
     private final boolean hasRefreshToken;
+    private long refreshTime;
     protected RedditClient(RedditApplication app, String bearerToken, String refreshToken) {
         this.app = app;
         this.bearerToken = bearerToken;
         this.refreshToken = refreshToken;
         this.hasRefreshToken = refreshToken != null;
+        this.refreshTime = System.currentTimeMillis() + 3300000L;
     }
 
     protected RedditClient(RedditApplication app, String bearerToken) {
@@ -250,7 +253,58 @@ public class RedditClient {
         return getComments(post, null, opts);
     }
 
+    /**
+     * Refreshes the client's bearer token. This is necessary because bearer tokens only last about 1 hour. This requires this session to have a refresh token, which it should if
+     * it was created as a "permanent" session. This is also called by default when necessary, however it should also be called manually when loading a previously suspended session.
+     * @throws IOException Failed to refresh
+     * @throws IllegalStateException Cannot refresh, no refresh token
+     * @see RedditClient#hasRefreshToken()
+     * @see RedditClient#isPermanent()
+     */
+    public void refresh() throws IOException, IllegalStateException {
+        if (!hasRefreshToken()) throw new IllegalStateException("Cannot refresh without a refresh token!");
+        InputStream is = null;
+        OutputStream os = null;
+        try {
+            String clientSecret = (app.hasClientSecret() ? app.getClientSecret() : "");
+            String basicAuth = new String(Base64.getEncoder().encode((app.getClientID() + ":" + clientSecret).getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
+            URL url = new URL("https://www.reddit.com/api/v1/access_token");
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            conn.setDoInput(true);
+            conn.setInstanceFollowRedirects(true);
+            conn.setRequestProperty("Accept", "*/*");
+            conn.setRequestProperty("Authorization", "Basic " + basicAuth);
+            conn.setRequestProperty("User-Agent", Reddit4J.getUserAgent());
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
+            conn.connect();
+            String payload = "grant_type=refresh_token&refresh_token=" + URLEncoder.encode(refreshToken, StandardCharsets.UTF_8);
+            os = conn.getOutputStream();
+            os.write(payload.getBytes(StandardCharsets.UTF_8));
+            os.flush();
+            is = conn.getInputStream();
+            byte[] resp = is.readAllBytes();
+            String respString = new String(resp, StandardCharsets.UTF_8);
+            if (gson == null) gson = new Gson();
+            JsonObject ob = gson.fromJson(respString, JsonObject.class);
+            String newAccessToken = ob.get("access_token").getAsString();
+            long expireTime = ob.get("expires_in").getAsLong();
+            this.bearerToken = newAccessToken;
+            this.refreshTime = System.currentTimeMillis() + (expireTime * 1000L);
+        } catch (IOException e) {
+            if (is != null) is.close();
+            if (os != null) os.close();
+            throw e;
+        }
+    }
+
     protected byte[] request(String method, String endpoint, Map<String, String> params) throws IOException {
+        if (hasRefreshToken()) {
+            if (System.currentTimeMillis() >= refreshTime) {
+                refresh();
+            }
+        }
         StringBuilder payload = new StringBuilder("raw_json=1");
         for (Map.Entry<String, String> entry : params.entrySet()) {
             payload.append("&");

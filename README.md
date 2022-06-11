@@ -36,6 +36,7 @@ RedditClient rc = app.createClient("bearerToken");
 // OR
 RedditClient rc = app.createClient("bearerToken", "refreshToken");
 ```
+When importing a pre-existing session with a refresh token present, it is recommended to run ``RedditClient#refresh()`` to re-sync the session even if the bearer token is not necessarily expired.
 
 #### Generate bearer/refresh tokens
 A great feature of this library is the ability to do local OAuth. This method will launch a web server listening for the OAuth response and catch it immediately.\
