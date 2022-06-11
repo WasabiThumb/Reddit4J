@@ -14,7 +14,7 @@ RedditApplication app = Reddit4J.getApplication();
 ```
 
 #### Using your own app instance
-First, you will need the app's client ID and in some cases the client secret. These can be obtained [here]((https://www.reddit.com/prefs/apps).
+First, you will need the app's client ID and in some cases the client secret. These can be obtained [here](https://www.reddit.com/prefs/apps).
 ```java
 RedditApplication app = new RedditApplication("CLIENT_ID");
 // OR
@@ -57,6 +57,9 @@ The bearer and refresh tokens (if present) can be extracted with ``RedditClient#
 The client can now be used to accomplish various goals. You can see the JavaDocs for more information. Note that certain methods require certain scopes to be granted on the active session; however most things can be accomplished with the READ and IDENTITY scopes.\
 The philosophy of this library is to provide a transparent layer over top of JSON APIs, so know that minimal caching is used and references are not typically actively held. This is due to the fact that Reddit's JSON structures are fairly irregular and not well documented, which is not a good match for Java.\
 Due to this fact, classes that attempt to parse these JSON structures may not cover all possible properties of the structure and it may be necessary to use ``#getJSON()`` (defined by ``JsonObjectWrapper``) in order to perform more complex operations.
+
+## Examples
+See the [official unit test module](https://github.com/WasabiThumb/Reddit4J/blob/master/src/test/java/R4JTest.java) for a class that tests the majority of unique capabilities that this library has.
 
 ## Appendix
 Knowledge of Reddit's API is reccomended for usage of this library.
