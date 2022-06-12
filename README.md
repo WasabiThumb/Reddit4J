@@ -63,7 +63,7 @@ You can see the JavaDocs for more information. Note that certain methods require
 The philosophy of this library is to provide a transparent layer over top of JSON APIs, so know that minimal caching is used and references are not typically actively held. This is due to the fact that Reddit's JSON structures are fairly irregular and not well documented, which is not a good match for Java.\
 Due to this fact, classes that attempt to parse these JSON structures may not cover all possible properties of the structure and it may be necessary to use ``#getJSON()`` (defined by ``JsonObjectWrapper``) in order to perform more complex operations.
 
-### Manual Invocation
+#### Manual Invocation
 If a wrapper does not exist for your needs, you need to invoke Reddit's APIs yourself. You can see a full list of endpoints [here](https://www.reddit.com/dev/api/).\
 Here is an example showcasing how to make a new comment on a post, which cannot be done with wrappers yet.
 ```java
