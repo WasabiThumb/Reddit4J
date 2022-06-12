@@ -367,4 +367,226 @@ public class RedditClient {
         return requestJSON(method, endpoint, Collections.emptyMap(), clazz);
     }
 
+    // Expose low-level methods
+
+    /**
+     * Sends a GET request to the specified endpoint and returns the result
+     * @param endpoint The endpoint (e.g. /api/v1/me). See all endpoints <a href="https://www.reddit.com/dev/api/">here</a>.
+     * @param params A map of URI-encoded parameters to send.
+     * @param clazz The class of the data structure to parse the body with (e.g. JsonObject.class).
+     * @return The JSON body
+     * @throws IOException Could not complete this request
+     */
+    public <T> @NotNull T get(String endpoint, Map<String, String> params, Class<? extends T> clazz) throws IOException {
+        return requestJSON("GET", endpoint, params, clazz);
+    }
+
+    /**
+     * Sends a GET request to the specified endpoint and returns the result
+     * @param endpoint The endpoint (e.g. /api/v1/me). See all endpoints <a href="https://www.reddit.com/dev/api/">here</a>.
+     * @param params A map of URI-encoded parameters to send.
+     * @return The JSON body
+     * @throws IOException Could not complete this request
+     */
+    public @NotNull JsonElement get(String endpoint, Map<String, String> params) throws IOException {
+        return requestJSON("GET", endpoint, params, JsonElement.class);
+    }
+
+    /**
+     * Sends a GET request to the specified endpoint and returns the result
+     * @param endpoint The endpoint (e.g. /api/v1/me). See all endpoints <a href="https://www.reddit.com/dev/api/">here</a>.
+     * @return The JSON body
+     * @throws IOException Could not complete this request
+     */
+    public @NotNull JsonElement get(String endpoint) throws IOException {
+        return requestJSON("GET", endpoint, Collections.emptyMap(), JsonElement.class);
+    }
+
+    /**
+     * Sends a GET request to the specified endpoint and returns the result
+     * @param endpoint The endpoint (e.g. /api/v1/me). See all endpoints <a href="https://www.reddit.com/dev/api/">here</a>.
+     * @param clazz The class of the data structure to parse the body with (e.g. JsonObject.class).
+     * @return The JSON body
+     * @throws IOException Could not complete this request
+     */
+    public <T> @NotNull T get(String endpoint, Class<? extends T> clazz) throws IOException {
+        return requestJSON("GET", endpoint, Collections.emptyMap(), clazz);
+    }
+
+    /**
+     * Sends a POST request to the specified endpoint and returns the result
+     * @param endpoint The endpoint (e.g. /api/v1/me). See all endpoints <a href="https://www.reddit.com/dev/api/">here</a>.
+     * @param params A map of URI-encoded parameters to send.
+     * @param clazz The class of the data structure to parse the body with (e.g. JsonObject.class).
+     * @return The JSON body
+     * @throws IOException Could not complete this request
+     */
+    public <T> @NotNull T post(String endpoint, Map<String, String> params, Class<? extends T> clazz) throws IOException {
+        return requestJSON("POST", endpoint, params, clazz);
+    }
+
+    /**
+     * Sends a POST request to the specified endpoint and returns the result
+     * @param endpoint The endpoint (e.g. /api/v1/me). See all endpoints <a href="https://www.reddit.com/dev/api/">here</a>.
+     * @param params A map of URI-encoded parameters to send.
+     * @return The JSON body
+     * @throws IOException Could not complete this request
+     */
+    public @NotNull JsonElement post(String endpoint, Map<String, String> params) throws IOException {
+        return requestJSON("POST", endpoint, params, JsonElement.class);
+    }
+
+    /**
+     * Sends a POST request to the specified endpoint and returns the result
+     * @param endpoint The endpoint (e.g. /api/v1/me). See all endpoints <a href="https://www.reddit.com/dev/api/">here</a>.
+     * @return The JSON body
+     * @throws IOException Could not complete this request
+     */
+    public @NotNull JsonElement post(String endpoint) throws IOException {
+        return requestJSON("POST", endpoint, Collections.emptyMap(), JsonElement.class);
+    }
+
+    /**
+     * Sends a POST request to the specified endpoint and returns the result
+     * @param endpoint The endpoint (e.g. /api/v1/me). See all endpoints <a href="https://www.reddit.com/dev/api/">here</a>.
+     * @param clazz The class of the data structure to parse the body with (e.g. JsonObject.class).
+     * @return The JSON body
+     * @throws IOException Could not complete this request
+     */
+    public <T> @NotNull T post(String endpoint, Class<? extends T> clazz) throws IOException {
+        return requestJSON("POST", endpoint, Collections.emptyMap(), clazz);
+    }
+
+    /**
+     * Sends a PATCH request to the specified endpoint and returns the result
+     * @param endpoint The endpoint (e.g. /api/v1/me). See all endpoints <a href="https://www.reddit.com/dev/api/">here</a>.
+     * @param params A map of URI-encoded parameters to send.
+     * @param clazz The class of the data structure to parse the body with (e.g. JsonObject.class).
+     * @return The JSON body
+     * @throws IOException Could not complete this request
+     */
+    public <T> @NotNull T patch(String endpoint, Map<String, String> params, Class<? extends T> clazz) throws IOException {
+        return requestJSON("PATCH", endpoint, params, clazz);
+    }
+
+    /**
+     * Sends a PATCH request to the specified endpoint and returns the result
+     * @param endpoint The endpoint (e.g. /api/v1/me). See all endpoints <a href="https://www.reddit.com/dev/api/">here</a>.
+     * @param params A map of URI-encoded parameters to send.
+     * @return The JSON body
+     * @throws IOException Could not complete this request
+     */
+    public @NotNull JsonElement patch(String endpoint, Map<String, String> params) throws IOException {
+        return requestJSON("PATCH", endpoint, params, JsonElement.class);
+    }
+
+    /**
+     * Sends a PATCH request to the specified endpoint and returns the result
+     * @param endpoint The endpoint (e.g. /api/v1/me). See all endpoints <a href="https://www.reddit.com/dev/api/">here</a>.
+     * @return The JSON body
+     * @throws IOException Could not complete this request
+     */
+    public @NotNull JsonElement patch(String endpoint) throws IOException {
+        return requestJSON("PATCH", endpoint, Collections.emptyMap(), JsonElement.class);
+    }
+
+    /**
+     * Sends a PATCH request to the specified endpoint and returns the result
+     * @param endpoint The endpoint (e.g. /api/v1/me). See all endpoints <a href="https://www.reddit.com/dev/api/">here</a>.
+     * @param clazz The class of the data structure to parse the body with (e.g. JsonObject.class).
+     * @return The JSON body
+     * @throws IOException Could not complete this request
+     */
+    public <T> @NotNull T patch(String endpoint, Class<? extends T> clazz) throws IOException {
+        return requestJSON("PATCH", endpoint, Collections.emptyMap(), clazz);
+    }
+
+    /**
+     * Sends a PUT request to the specified endpoint and returns the result
+     * @param endpoint The endpoint (e.g. /api/v1/me). See all endpoints <a href="https://www.reddit.com/dev/api/">here</a>.
+     * @param params A map of URI-encoded parameters to send.
+     * @param clazz The class of the data structure to parse the body with (e.g. JsonObject.class).
+     * @return The JSON body
+     * @throws IOException Could not complete this request
+     */
+    public <T> @NotNull T put(String endpoint, Map<String, String> params, Class<? extends T> clazz) throws IOException {
+        return requestJSON("PUT", endpoint, params, clazz);
+    }
+
+    /**
+     * Sends a PUT request to the specified endpoint and returns the result
+     * @param endpoint The endpoint (e.g. /api/v1/me). See all endpoints <a href="https://www.reddit.com/dev/api/">here</a>.
+     * @param params A map of URI-encoded parameters to send.
+     * @return The JSON body
+     * @throws IOException Could not complete this request
+     */
+    public @NotNull JsonElement put(String endpoint, Map<String, String> params) throws IOException {
+        return requestJSON("PUT", endpoint, params, JsonElement.class);
+    }
+
+    /**
+     * Sends a PUT request to the specified endpoint and returns the result
+     * @param endpoint The endpoint (e.g. /api/v1/me). See all endpoints <a href="https://www.reddit.com/dev/api/">here</a>.
+     * @return The JSON body
+     * @throws IOException Could not complete this request
+     */
+    public @NotNull JsonElement put(String endpoint) throws IOException {
+        return requestJSON("PUT", endpoint, Collections.emptyMap(), JsonElement.class);
+    }
+
+    /**
+     * Sends a PUT request to the specified endpoint and returns the result
+     * @param endpoint The endpoint (e.g. /api/v1/me). See all endpoints <a href="https://www.reddit.com/dev/api/">here</a>.
+     * @param clazz The class of the data structure to parse the body with (e.g. JsonObject.class).
+     * @return The JSON body
+     * @throws IOException Could not complete this request
+     */
+    public <T> @NotNull T put(String endpoint, Class<? extends T> clazz) throws IOException {
+        return requestJSON("PUT", endpoint, Collections.emptyMap(), clazz);
+    }
+
+    /**
+     * Sends a DELETE request to the specified endpoint and returns the result
+     * @param endpoint The endpoint (e.g. /api/v1/me). See all endpoints <a href="https://www.reddit.com/dev/api/">here</a>.
+     * @param params A map of URI-encoded parameters to send.
+     * @param clazz The class of the data structure to parse the body with (e.g. JsonObject.class).
+     * @return The JSON body
+     * @throws IOException Could not complete this request
+     */
+    public <T> @NotNull T delete(String endpoint, Map<String, String> params, Class<? extends T> clazz) throws IOException {
+        return requestJSON("DELETE", endpoint, params, clazz);
+    }
+
+    /**
+     * Sends a DELETE request to the specified endpoint and returns the result
+     * @param endpoint The endpoint (e.g. /api/v1/me). See all endpoints <a href="https://www.reddit.com/dev/api/">here</a>.
+     * @param params A map of URI-encoded parameters to send.
+     * @return The JSON body
+     * @throws IOException Could not complete this request
+     */
+    public @NotNull JsonElement delete(String endpoint, Map<String, String> params) throws IOException {
+        return requestJSON("DELETE", endpoint, params, JsonElement.class);
+    }
+
+    /**
+     * Sends a DELETE request to the specified endpoint and returns the result
+     * @param endpoint The endpoint (e.g. /api/v1/me). See all endpoints <a href="https://www.reddit.com/dev/api/">here</a>.
+     * @return The JSON body
+     * @throws IOException Could not complete this request
+     */
+    public @NotNull JsonElement delete(String endpoint) throws IOException {
+        return requestJSON("DELETE", endpoint, Collections.emptyMap(), JsonElement.class);
+    }
+
+    /**
+     * Sends a DELETE request to the specified endpoint and returns the result
+     * @param endpoint The endpoint (e.g. /api/v1/me). See all endpoints <a href="https://www.reddit.com/dev/api/">here</a>.
+     * @param clazz The class of the data structure to parse the body with (e.g. JsonObject.class).
+     * @return The JSON body
+     * @throws IOException Could not complete this request
+     */
+    public <T> @NotNull T delete(String endpoint, Class<? extends T> clazz) throws IOException {
+        return requestJSON("DELETE", endpoint, Collections.emptyMap(), clazz);
+    }
+
 }

@@ -1,10 +1,6 @@
 # Reddit4J
 An OAuth2 Reddit client for Java
 
-## NOTICE
-This project is in its very early stages and is missing many important features for a Reddit client. The main goal of this project is for browsing capability, and other things such as making posts
-or comments may be added in the future.
-
 ## Usage
 ### Creating a RedditApplication instance
 #### Using the default app instance
@@ -55,9 +51,29 @@ Note that the OAuth server automatically re-launches whenever it is needed, so t
 The bearer and refresh tokens (if present) can be extracted with ``RedditClient#getBearerToken()`` and ``RedditClient#getRefreshToken()``.
 
 ### Using the RedditClient
-The client can now be used to accomplish various goals. You can see the JavaDocs for more information. Note that certain methods require certain scopes to be granted on the active session; however most things can be accomplished with the READ and IDENTITY scopes.\
+#### Wrappers
+A growing list of functions are provided for convenience and ease-of-use. It is currently very limited, however very useful. A few include:
+| Method | Description |
+|---:|:---|
+| RedditClient#getHot | Gets the hot posts in a sub |
+| RedditClient#getTop | Gets the top posts in a sub |
+| RedditClient#getComments | Gets the comments of a post or replies to a parent comment |
+You can see the JavaDocs for more information. Note that certain methods require certain scopes to be granted on the active session; however most things can be accomplished with the READ and IDENTITY scopes.\
 The philosophy of this library is to provide a transparent layer over top of JSON APIs, so know that minimal caching is used and references are not typically actively held. This is due to the fact that Reddit's JSON structures are fairly irregular and not well documented, which is not a good match for Java.\
 Due to this fact, classes that attempt to parse these JSON structures may not cover all possible properties of the structure and it may be necessary to use ``#getJSON()`` (defined by ``JsonObjectWrapper``) in order to perform more complex operations.
+
+### Manual Invocation
+If a wrapper does not exist for your needs, you need to invoke Reddit's APIs yourself. You can see a full list of endpoints [here](https://www.reddit.com/dev/api/).\
+Here is an example showcasing how to make a new comment on a post, which cannot be done with wrappers yet.
+```java
+client.post("/api/comment", Map.of(
+        "thing_id", "FULLNAME OF POST HERE",
+        "api_type", "json",
+        "text", "POST CONTENT HERE"
+)); // returns a JsonElement
+```
+Similar methods exist for GET, PATCH, PUT and DELETE requests.\
+Note that modhashes are not necessary here, because all requests are sent with OAuth authentication.
 
 ## Examples
 See the [official unit test module](https://github.com/WasabiThumb/Reddit4J/blob/master/src/test/java/R4JTest.java) for a class that tests the majority of unique capabilities that this library has.
